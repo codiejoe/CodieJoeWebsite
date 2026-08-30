@@ -1,0 +1,157 @@
+@{
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    string ActiveClass(string routePath) => currentPage == routePath ? "active" : "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+
+    <link rel="stylesheet" href="~/css/Admin/admin.css" asp-append-version="true"/>
+
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <div class="brand-name">
+            CodieJoe
+        </div>
+
+        <div class="brand-label">
+            Administration
+        </div>
+    </div>
+    <nav class="navigation">
+
+        <div class="nav-section">
+            Overview
+        </div>
+
+        <a class="nav-item @ActiveClass(@Routes.DashboardPath)" href="@Routes.DashboardPath">
+            <span class="nav-icon">⌂</span>
+            <span class="nav-label">Dashboard</span>
+        </a>
+
+
+        <div class="nav-section">
+            Content
+        </div>
+
+        <a class="nav-item @ActiveClass(@Routes.ProjectListPath)" href="@Routes.ProjectListPath">
+            <span class="nav-icon">◫</span>
+            <span class="nav-label">Projects</span>
+        </a>
+
+        <a class="nav-item @ActiveClass(@Routes.BlogListPath)" href="@Routes.BlogListPath">
+            <span class="nav-icon">□</span>
+            <span class="nav-label">Blog</span>
+        </a>
+
+
+        <div class="nav-section">
+            Organization
+        </div>
+
+        <a class="nav-item @ActiveClass(@Routes.TagsPath)" href="@Routes.TagsPath">
+            <span class="nav-icon">#</span>
+            <span class="nav-label">Tags</span>
+        </a>
+
+        <a class="nav-item @ActiveClass(@Routes.TechnologyPath)" href="@Routes.TechnologyPath">
+            <span class="nav-icon">◇</span>
+            <span class="nav-label">Technologies</span>
+        </a>
+
+
+        <div class="nav-section">
+            Configuration
+        </div>
+
+        <button class="nav-item">
+            <span class="nav-icon">◎</span>
+            <span class="nav-label">Social Links</span>
+        </button>
+
+        <a class="nav-item">
+            <span class="nav-icon">⚙</span>
+            <span class="nav-label">Settings</span>
+        </a>
+
+    </nav>
+    <div class="sidebar-footer">
+
+        <div class="profile">
+
+            <div class="avatar">
+                CJ
+            </div>
+
+            <div class="profile-info">
+
+                <div class="profile-name">
+                    CodieJoe
+                </div>
+
+                <div class="profile-role">
+                    Administrator
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+        <div class="page-location">
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu">
+                ☰
+            </button>
+
+
+            <span>@Html.Raw(currentPage.Substring(1))</span>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <button class="topbar-button">
+                View website
+            </button>
+
+            <button class="topbar-button">
+                Logout
+            </button>
+
+        </div>
+    </header>
+    <!-- PAGE CONTENT -->
+    @RenderBody()
+</main>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/Admin/index.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
