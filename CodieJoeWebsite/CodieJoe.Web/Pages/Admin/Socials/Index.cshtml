@@ -1,0 +1,126 @@
+@page
+@model CodieJoe.Web.Pages.Admin.Socials.Index
+
+@{
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-5">
+    <button class="btn btn-primary mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#addSocialsModal"
+            type="button">
+        + New Socials Link
+    </button>
+
+    <table class="table-primary">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Link</th>
+            <th>Display Order</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var social in Model.TableSocials)
+        {
+            <tr>
+                <td>@social.Name</td>
+                <td>@social.Link</td>
+                <td>@social.DisplayOrder</td>
+
+                <td>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary edit-socials-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editSocialsModal"
+                            data-socials-id="@social.Id"
+                            data-socials-name="@social.Name"
+                            data-socials-link="@social.Link"
+                            data-socials-displayOrder="@social.DisplayOrder"
+                    >
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<!-- ADD MODAL-->
+<div class="modal fade"
+     id="addSocialsModal"
+     tabindex="-1"
+     aria-labelledby="addSocialsModalLabel"
+     aria-hidden="true">
+    
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post"
+                  asp-page="@Routes.SocialsPath"
+                  asp-page-handler="Create">
+
+                <div class="modal-header">
+
+                    <h1 class="modal-title fs-5"
+                        id="addSocialsModalLabel">
+                        Add New Social Link
+                    </h1>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger">
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="select_socialMediaType"
+                               class="form-label">
+                            Social Media Type
+                        </label>
+
+                        <select asp-for="@Model.SocialsAddRequestVm.SocialMediaType" asp-items="@Model.SocialMediaTypeList" id="select_socialMediaType" class="form-select">
+                            
+                        </select>
+
+
+                        <span asp-validation-for="@Model.SocialsAddRequestVm.SocialMediaType"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Add Tech
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

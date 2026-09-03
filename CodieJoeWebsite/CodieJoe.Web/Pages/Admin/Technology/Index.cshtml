@@ -1,7 +1,303 @@
 @page
+@using CodieJoe.Web.Pages.Admin.ViewModels.Requests
 @model CodieJoe.Web.Pages.Admin.Technology.Index
 
 @{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
 
+<div class="container-fluid mt-5">
+    <button class="btn btn-primary mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#addTechnologyModal"
+            type="button">
+        + New Tech
+    </button>
+
+    <table class="table-primary">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Icon</th>
+            <th>Slug</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var tech in Model.TableTechnologies)
+        {
+            <tr>
+                <td>@tech.Name</td>
+                <td><img src="~/icons/@tech.Icon"
+                         style="width: 3rem; height: 3rem;"/></td>
+                <td>@tech.Slug</td>
+
+                <td>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary edit-tech-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editTechModal"
+                            data-tech-id="@tech.Id"
+                            data-tech-name="@tech.Name"
+                            data-tech-icon="@tech.Icon"
+                            data-tech-slug="@tech.Slug"
+                    >
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<!-- ADD MODAL-->
+<div class="modal fade"
+     id="addTechnologyModal"
+     tabindex="-1"
+     aria-labelledby="addTechnologyModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post"
+                  asp-page="@Routes.TechnologyPath"
+                  asp-page-handler="Create">
+
+                <div class="modal-header">
+
+                    <h1 class="modal-title fs-5"
+                        id="addTechnologyModalLabel">
+                        Add New Technology
+                    </h1>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger">
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="TechnologyAddRequestVm.Name"
+                               class="form-label">
+                            Tech Name
+                        </label>
+
+                        <input asp-for="TechnologyAddRequestVm.Name"
+                               class="form-control"
+                               placeholder="Enter tech name"/>
+
+                        <span asp-validation-for="TechnologyAddRequestVm.Name"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="TechnologyAddRequestVm.Icon"
+                               class="form-label">
+                            Tech Icon
+                        </label>
+
+                        <input asp-for="TechnologyAddRequestVm.Icon"
+                               class="form-control"
+                               placeholder="Enter tech icon path"/>
+
+                        <span asp-validation-for="TechnologyAddRequestVm.Icon"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="TechnologyAddRequestVm.Slug"
+                               class="form-label">
+                            Tech Slug
+                        </label>
+
+                        <input asp-for="TechnologyAddRequestVm.Slug"
+                               class="form-control"
+                               placeholder="Enter slug"/>
+
+                        <span asp-validation-for="TechnologyAddRequestVm.Slug"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Add Tech
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- EDIT MODAL-->
+<div class="modal fade"
+     id="editTechModal"
+     tabindex="-1"
+     aria-labelledby="editTechModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post"
+                  asp-page-handler="Update">
+
+                <div class="modal-header">
+
+                    <h1 class="modal-title fs-5"
+                        id="editTechModalLabel">
+                        Edit Technology
+                    </h1>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger">
+                    </div>
+
+                    <div class="mb-3">
+                        <input asp-for="TechnologyUpdateRequestVm.Id" type="hidden"/>
+                        <label asp-for="TechnologyUpdateRequestVm.Name"
+                               class="form-label">
+                            Technology Name
+                        </label>
+
+                        <input asp-for="TechnologyUpdateRequestVm.Name"
+                               class="form-control"
+                               placeholder="Enter technology name"/>
+
+                        <span asp-validation-for="TechnologyUpdateRequestVm.Name"
+                              class="text-danger">
+                            </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="TechnologyUpdateRequestVm.Icon"
+                               class="form-label">
+                            Tech Icon
+                        </label>
+
+                        <input asp-for="TechnologyUpdateRequestVm.Icon"
+                               class="form-control"
+                               placeholder="Enter tech icon"/>
+
+                        <span asp-validation-for="TechnologyUpdateRequestVm.Icon"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="TechnologyUpdateRequestVm.Slug"
+                               class="form-label">
+                            Tech Slug
+                        </label>
+
+                        <input asp-for="TechnologyUpdateRequestVm.Slug"
+                               class="form-control"
+                               placeholder="Enter tech slug"/>
+
+                        <span asp-validation-for="TechnologyUpdateRequestVm.Slug"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            asp-page-handler="Delete"
+                            class="btn btn-danger"
+                            formnovalidate
+                    >
+                        Delete
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+
+        document.querySelectorAll(".edit-tech-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                document.getElementById('TechnologyUpdateRequestVm_Id').value = this.dataset.techId;
+                document.getElementById('TechnologyUpdateRequestVm_Name').value = this.dataset.techName;
+                document.getElementById('TechnologyUpdateRequestVm_Slug').value = this.dataset.techSlug;
+                document.getElementById('TechnologyUpdateRequestVm_Icon').value = this.dataset.techIcon;
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            @if (Model.ShowAddModal)
+            {
+                <text>new bootstrap.Modal(document.getElementById('addTagModal')).show();</text>
+            }
+            @if (Model.ShowEditModal)
+            {
+                <text>new bootstrap.Modal(document.getElementById('editTagModal')).show();</text>
+            }
+        });
+    </script>
+
+
+
+}

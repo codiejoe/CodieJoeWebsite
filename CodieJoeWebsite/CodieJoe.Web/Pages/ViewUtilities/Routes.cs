@@ -21,5 +21,6 @@ public static class Routes
     
     public const string TagsPath = "/Admin/Tag/Index";
     public const string TechnologyPath = "/Admin/Technology/Index";
+    public const string SocialsPath = "/Admin/Socials/Index";
 
 }

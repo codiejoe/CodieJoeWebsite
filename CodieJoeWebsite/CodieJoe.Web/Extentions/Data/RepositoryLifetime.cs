@@ -8,7 +8,9 @@ public static class RepositoryLifetime
     public static IServiceCollection AddRepositoryLifetime(this IServiceCollection services)
     {
         services.AddScoped<ITagRepository, TagRepository>();
-        
+        services.AddScoped<ITechnologyRepository, TechnologyRepository>();
+        services.AddScoped<ISocialsRepository, SocialsRepository>();
+
         return services;
     }
 }
